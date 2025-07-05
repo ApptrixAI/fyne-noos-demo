@@ -8,7 +8,6 @@ APP ?= noosdemo
 IMAGE_BASE := 10000000
 TEXT_START := $(shell echo $$((16#$(IMAGE_BASE) + 16#10000)))
 GOFLAGS := -tags ${BUILD_TAGS} -trimpath -ldflags "-s -w -E cpuinit -T $(TEXT_START) -R 0x1000"
-GOENV := GOOS=tamago GOARCH=amd64
 
 OVMFCODE ?= OVMF_CODE.fd
 OVMFVARS ?= OVMF_VARS.fd
@@ -39,19 +38,38 @@ check_tamago:
 	fi
 
 clean:
-	@rm -fr $(APP) $(APP).efi
+	@rm -fr $(APP)-tamago $(APP).efi $(APP)-tinygo
 
-$(APP): check_tamago
-	$(GOENV) $(TAMAGO) build $(GOFLAGS) -o ${APP}
+tamago: check_tamago
+	GOOS=tamago GOARCH=amd64 $(TAMAGO) build $(GOFLAGS) -o ${APP}-tamago
 
-$(APP).efi: $(APP)
+$(APP).efi: tamago
 	objcopy \
 		--strip-debug \
 		--target efi-app-x86_64 \
 		--subsystem=efi-app \
 		--image-base 0x$(IMAGE_BASE) \
 		--stack=0x10000 \
-		${APP} ${APP}.efi
+		${APP}-tamago ${APP}.efi
 	printf '\x26\x02' | dd of=${APP}.efi bs=1 seek=150 count=2 conv=notrunc,fsync # adjust Characteristics
 
-	rm ${APP}
+	rm ${APP}-tamago
+
+check_tinygo:
+	@if ! command -v tinygo &> /dev/null ; then \
+		echo 'You need to install the tinygo compiler'; \
+		exit 1; \
+	fi
+
+tinygo: check_tinygo
+	tinygo build -tags noos,noasm -o ${APP}-tinygo
+
+check_tinydisplay:
+	@if ! command -v tinydisplay &> /dev/null ; then \
+		echo 'You need to install the tinydisplay display simulator from https://github.com/sago35/tinydisplay'; \
+		exit 1; \
+	fi
+
+tinydisplay: check_tinydisplay
+	tinydisplay &
+	go run -tags tinygo,noos,noasm .

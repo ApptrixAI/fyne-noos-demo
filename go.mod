@@ -4,6 +4,7 @@ go 1.24.2
 
 require (
 	fyne.io/fyne/v2 v2.6.1
+	github.com/sago35/tinydisplay v0.3.0
 	github.com/usbarmory/go-boot v0.0.0-20250519071039-682fd55bc6ca
 )
 
@@ -48,6 +49,9 @@ require (
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	tinygo.org/x/drivers v0.21.0 // indirect
 )
 
-replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250630102338-72ba629f7082
+replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250705180345-95b8b5890d9f
+
+replace github.com/go-text/typesetting => github.com/andydotxyz/typesetting v0.0.0-20250705153255-eb13e57d1129
