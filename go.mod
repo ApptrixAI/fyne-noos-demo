@@ -22,7 +22,7 @@ require (
 	github.com/go-gl/gl v0.0.0-20231021071112-07e5d0ea2e71 // indirect
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20240506104042-037f3cc74f2a // indirect
 	github.com/go-text/render v0.2.0 // indirect
-	github.com/go-text/typesetting v0.2.1 // indirect
+	github.com/go-text/typesetting v0.3.1-0.20250707124828-a143bcf93281 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/hack-pad/go-indexeddb v0.3.2 // indirect
 	github.com/hack-pad/safejs v0.1.0 // indirect
@@ -53,5 +53,3 @@ require (
 )
 
 replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250705180345-95b8b5890d9f
-
-replace github.com/go-text/typesetting => github.com/andydotxyz/typesetting v0.0.0-20250705153255-eb13e57d1129
