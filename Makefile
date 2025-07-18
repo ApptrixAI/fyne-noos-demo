@@ -1,13 +1,15 @@
 # noos-demo make utility
 # derived from https://github.com/usbarmory/go-boot/blob/main/Makefile
 
-BUILD_TAGS = linkcpuinit,linkramsize,linkramstart,linkprintk
+FYNE_TAGS = no_animations
 SHELL = /bin/bash
 APP ?= noosdemo
 
 IMAGE_BASE := 10000000
 TEXT_START := $(shell echo $$((16#$(IMAGE_BASE) + 16#10000)))
-GOFLAGS := -tags ${BUILD_TAGS} -trimpath -ldflags "-s -w -E cpuinit -T $(TEXT_START) -R 0x1000"
+TAMAGO_GOFLAGS := -tags linkcpuinit,linkramsize,linkramstart,linkprintk,$(FYNE_TAGS) -trimpath -ldflags "-s -w -E cpuinit -T $(TEXT_START) -R 0x1000"
+
+TINYGO_GOFLAGS := -tags noos,noasm,$(FYNE_TAGS)
 
 OVMFCODE ?= OVMF_CODE.fd
 OVMFVARS ?= OVMF_VARS.fd
@@ -18,7 +20,7 @@ QEMU ?= qemu-system-x86_64 \
         -drive if=pflash,format=raw,readonly,file=$(OVMFCODE) \
         -drive if=pflash,format=raw,file=$(OVMFVARS) \
         -global isa-debugcon.iobase=0x402 \
-        -serial stdio -display sdl
+        -serial stdio -display sdl -vga cirrus
 
 .PHONY: clean
 
@@ -41,7 +43,7 @@ clean:
 	@rm -fr $(APP)-tamago $(APP).efi $(APP)-tinygo
 
 tamago: check_tamago
-	GOOS=tamago GOARCH=amd64 $(TAMAGO) build $(GOFLAGS) -o ${APP}-tamago
+	GOOS=tamago GOARCH=amd64 $(TAMAGO) build $(TAMAGO_GOFLAGS) -o ${APP}-tamago
 
 $(APP).efi: tamago
 	objcopy \
@@ -62,7 +64,7 @@ check_tinygo:
 	fi
 
 tinygo: check_tinygo
-	tinygo build -tags noos,noasm -o ${APP}-tinygo
+	tinygo build $(TINYGO_GOFLAGS),nodisplay -o ${APP}-tinygo
 
 check_tinydisplay:
 	@if ! command -v tinydisplay &> /dev/null ; then \
@@ -71,5 +73,6 @@ check_tinydisplay:
 	fi
 
 tinydisplay: check_tinydisplay
-	tinydisplay &
-	go run -tags tinygo,noos,noasm .
+	$(eval PID := $(shell sh -c 'tinydisplay >/dev/null & echo $$!'))
+	go run $(TINYGO_GOFLAGS),tinygo -trimpath -ldflags "-s -w" .
+	@kill $(PID)
