@@ -3,28 +3,16 @@
 package main
 
 import (
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/driver/noos"
-	"github.com/sago35/tinydisplay"
-	"image"
-	"image/draw"
-	"time"
 )
 
 const noKey = uint16(0xFFFF)
 
-var display *tinydisplay.Client
-
 func quit() {
 	// no-op
-}
-
-func refresh(img image.Image) {
-	// tinydisplay does not like our *image.NRGBA, so copy it
-	out := image.NewRGBA(img.Bounds())
-	draw.Draw(out, out.Bounds(), img, image.ZP, draw.Src)
-
-	display.SetImage(out)
 }
 
 func runApp(a fyne.App, queue chan noos.Event) {
@@ -37,7 +25,7 @@ func runEvents(a fyne.App, queue chan noos.Event) {
 	for {
 		time.Sleep(time.Millisecond * 10) // don't poll too fast
 
-		newKey := display.GetPressedKey()
+		newKey := nextKey()
 		if newKey == key {
 			continue
 		}
@@ -57,13 +45,6 @@ func runEvents(a fyne.App, queue chan noos.Event) {
 	}
 
 	fyne.Do(a.Quit)
-}
-
-func screenSize() (uint64, uint64) {
-	display, _ = tinydisplay.NewClient("127.0.0.1", 9812, 0, 0)
-	w, h := display.Size()
-
-	return uint64(w), uint64(h)
 }
 
 func mapKey(key uint16) uint16 {
