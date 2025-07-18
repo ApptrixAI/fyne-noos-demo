@@ -58,10 +58,10 @@ func mapKey(key uint16) uint16 {
 		return 27 // esc
 	case 0x101:
 		return 13 // ret
-	case 0x102:
-		return 8 // tab
 	case 0x103:
-		return 9 // backspace
+		return 8 // backspace
+	case 0x102:
+		return 9 // tab
 	case 0x105:
 		return 127 // delete
 	}

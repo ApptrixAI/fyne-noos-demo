@@ -52,4 +52,4 @@ require (
 	tinygo.org/x/drivers v0.21.0 // indirect
 )
 
-replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250705180345-95b8b5890d9f
+replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250718155148-721cbdfc8db9
