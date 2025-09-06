@@ -5,13 +5,11 @@ go 1.24.2
 require (
 	fyne.io/fyne/v2 v2.6.1
 	fyne.io/x/fyne v0.0.0-00010101000000-000000000000
-	github.com/go-delve/delve v1.25.1
 )
 
 require (
 	fyne.io/systray v1.11.1-0.20250603113521-ca66a66d8b58 // indirect
 	github.com/BurntSushi/toml v1.5.0 // indirect
-	github.com/cilium/ebpf v0.11.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fredbi/uri v1.1.1 // indirect
@@ -27,7 +25,6 @@ require (
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/hack-pad/go-indexeddb v0.3.2 // indirect
 	github.com/hack-pad/safejs v0.1.0 // indirect
-	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/jeandeaual/go-locale v0.0.0-20250612000132-0ef82f21eade // indirect
 	github.com/jsummers/gobmp v0.0.0-20230614200233-a9de23ed2e25 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
@@ -47,17 +44,14 @@ require (
 	github.com/usbarmory/go-boot v0.0.0-20250519071039-682fd55bc6ca // indirect
 	github.com/usbarmory/tamago v0.0.0-20250506193353-852659b3a9d6 // indirect
 	github.com/yuin/goldmark v1.7.8 // indirect
-	golang.org/x/arch v0.11.0 // indirect
-	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
 	golang.org/x/image v0.24.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/telemetry v0.0.0-20241106142447-58a1122356f5 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	tinygo.org/x/drivers v0.29.1-0.20250118064509-00578a3a81f3 // indirect
 )
 
-replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250905192137-4e2363f2710b
+replace fyne.io/fyne/v2 => github.com/andydotxyz/fyne/v2 v2.2.0-rc1.0.20250906184609-25c7154dc182
 
-replace fyne.io/x/fyne => github.com/andydotxyz/fyne-x v0.0.0-20250905192338-874ca579e9f9
+replace fyne.io/x/fyne => github.com/andydotxyz/fyne-x v0.0.0-20250906184733-b01e61f4117a

@@ -15,16 +15,9 @@ var imgData []byte
 
 func main() {
 	a := app.New()
-	d := setup(a)
-
-	winSize := fyne.NewSize(640, 480)
-	if d != nil {
-		winSize = d.ScreenSize()
-	}
+	setup(a)
 
 	w := a.NewWindow("Fyne NOOS Demo")
-	w.Resize(winSize)
-
 	setContent(w)
 	w.Show()
 
